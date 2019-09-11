@@ -46,6 +46,13 @@ matrix:
         - NEW_STREAM=5.26
         - MODULE_PROFILE=default
       <<: *test_in_container
+    - env:
+        - MODULE_NAME=postgresql
+        - CUR_STREAM=9.6
+        - NEW_STREAM=10
+        # Need to set a profile as postgresql module does not have a default profile.
+        - MODULE_PROFILE=server
+      <<: *test_in_container
   allow_failures:
   fast_finish: true
 branches:
