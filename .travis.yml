@@ -1,0 +1,25 @@
+dist: xenial
+language: bash
+
+.com.github.junaruga.switch-module-stream-matrix-definitions:
+  - &test_in_container
+    install: |
+      docker build --rm -t test/fedora -f ci/Dockerfile-fedora .
+    script: |
+      docker run --rm -t test/fedora "${TEST_CMD:-uname}"
+
+matrix:
+  include:
+    - name: ruby
+      <<: *test_in_container
+  allow_failures:
+  fast_finish: true
+script:
+  - bundle exec rake
+branches:
+  only:
+    - master
+    # Enable "test/*" and "pull/*" branches to run Travis CI
+    # on forked repository.
+    - /^test\//
+    - /^pull\//
