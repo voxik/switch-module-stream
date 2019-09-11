@@ -11,6 +11,7 @@ env:
         --build-arg MODULE_NAME=${MODULE_NAME} \
         --build-arg CUR_STREAM=${CUR_STREAM} \
         --build-arg NEW_STREAM=${NEW_STREAM} \
+        --build-arg MODULE_PROFILE=${MODULE_PROFILE} \
         .
     script: |
       docker run --rm -t test/fedora ${TEST_CMD}
@@ -36,11 +37,14 @@ matrix:
         - MODULE_NAME=perl
         - CUR_STREAM=5.26
         - NEW_STREAM=5.30
+        # Need to set a profile as perl module does not have a default profile.
+        - MODULE_PROFILE=default
       <<: *test_in_container
     - env:
         - MODULE_NAME=perl
         - CUR_STREAM=5.30
         - NEW_STREAM=5.26
+        - MODULE_PROFILE=default
       <<: *test_in_container
   allow_failures:
   fast_finish: true

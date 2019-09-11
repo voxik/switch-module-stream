@@ -8,10 +8,12 @@ ARG MODULE_NAME=ruby
 ARG CUR_STREAM=2.5
 # New stream
 ARG NEW_STREAM=2.6
+ARG MODULE_PROFILE
 
 ENV MODULE_NAME "${MODULE_NAME}"
 ENV CUR_STREAM "${CUR_STREAM}"
 ENV NEW_STREAM "${NEW_STREAM}"
+ENV MODULE_PROFILE "${MODULE_PROFILE}"
 
 # ====
 # Step 0: Create the prerequisites
@@ -26,7 +28,7 @@ RUN chown -R tester:tester /work
 RUN yum module list "${MODULE_NAME}"
 RUN yum -y module reset "${MODULE_NAME}"
 RUN yum -y module enable "${MODULE_NAME}:${CUR_STREAM}"
-RUN yum -y module install "${MODULE_NAME}:${CUR_STREAM}"
+RUN script/run-module-install.sh
 
 # Install RPM packages or language packages (in case of ruby, gem packages)
 # for testing.
