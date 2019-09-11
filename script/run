@@ -10,6 +10,8 @@ if [ -f "script/${MODULE_NAME}-${CUR_STREAM}-to-${NEW_STREAM}/${SCRIPT_NAME}" ];
     "script/${MODULE_NAME}-${CUR_STREAM}-to-${NEW_STREAM}/${SCRIPT_NAME}"
 elif [ -f "script/${MODULE_NAME}/${SCRIPT_NAME}" ]; then
     "script/${MODULE_NAME}/${SCRIPT_NAME}"
+elif [ -f "script/${SCRIPT_NAME}" ]; then
+    "script/${SCRIPT_NAME}"
 else
    echo "Skip running ${SCRIPT_NAME}."
 fi
