@@ -1,0 +1,15 @@
+#!/bin/bash -ex
+
+if [ ${#} -lt 1 ]; then
+    echo "Argument required." 1>&2
+    echo 1
+fi
+SCRIPT_NAME="${1}"
+
+if [ -f "script/${MODULE_NAME}-${CUR_STREAM}-to-${NEW_STREAM}/${SCRIPT_NAME}" ]; then
+    "script/${MODULE_NAME}-${CUR_STREAM}-to-${NEW_STREAM}/${SCRIPT_NAME}"
+elif [ -f "script/${MODULE_NAME}/${SCRIPT_NAME}" ]; then
+    "script/${MODULE_NAME}/${SCRIPT_NAME}"
+else
+   echo "Skip running ${SCRIPT_NAME}."
+fi

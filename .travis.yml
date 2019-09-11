@@ -2,18 +2,32 @@ dist: xenial
 language: bash
 env:
   global:
-    - TEST_CMD='cat /etc/redhat-release'
+    - TEST_CMD='script/run test.sh'
 
 .com.github.junaruga.switch-module-stream-matrix-definitions:
   - &test_in_container
     install: |
-      docker build --rm -t test/fedora -f ci/Dockerfile-fedora .
+      docker build --rm -t test/fedora -f ci/Dockerfile-fedora \
+        --build-arg MODULE_NAME=${MODULE_NAME} \
+        --build-arg CUR_STREAM=${CUR_STREAM} \
+        --build-arg NEW_STREAM=${NEW_STREAM} \
+        .
     script: |
       docker run --rm -t test/fedora ${TEST_CMD}
 
 matrix:
   include:
     - name: ruby
+      env:
+        - MODULE_NAME=ruby
+        - CUR_STREAM=2.5
+        - NEW_STREAM=2.6
+      <<: *test_in_container
+    - name: nodejs
+      env:
+        - MODULE_NAME=nodejs
+        - CUR_STREAM=10
+        - NEW_STREAM=12
       <<: *test_in_container
   allow_failures:
   fast_finish: true

@@ -1,6 +1,17 @@
-# A use case to switch a module stream from ruby:2.5 to ruby:2.6.
+# A use case to switch a module stream.
+# The default is the use case from ruby:2.5 to ruby:2.6.
 ARG BASE_IMAGE=fedora:30
 FROM ${BASE_IMAGE}
+
+ARG MODULE_NAME=ruby
+# Current stream
+ARG CUR_STREAM=2.5
+# New stream
+ARG NEW_STREAM=2.6
+
+ENV MODULE_NAME "${MODULE_NAME}"
+ENV CUR_STREAM "${CUR_STREAM}"
+ENV NEW_STREAM "${NEW_STREAM}"
 
 # ====
 # Step 0: Create the prerequisites
@@ -11,31 +22,26 @@ WORKDIR /work
 COPY . .
 RUN chown -R tester:tester /work
 
-# Install ruby:2.5 module.
-RUN yum -y module reset ruby
-RUN yum -y module enable ruby:2.5
-RUN yum -y module install ruby:2.5
+# Install current module.
+RUN yum module list "${MODULE_NAME}"
+RUN yum -y module reset "${MODULE_NAME}"
+RUN yum -y module enable "${MODULE_NAME}:${CUR_STREAM}"
+RUN yum -y module install "${MODULE_NAME}:${CUR_STREAM}"
 
-# Install gem packages by gem command on Ruby 2.5.
-# to test gem packages that have C-extention.
-# byebug and nio4r gem packages are C-extention gem.
+# Install RPM packages or language packages (in case of ruby, gem packages)
+# for testing.
+# Some points to be tested.
+# * RPM packages depending on current module stream,
+#   but not depending on new module stream.
+# * Language packages depending on current module stream,
+#   but not depending on new module stream.
 
-# Install dependencies for the installed gem packages.
-RUN yum -y install \
-  gcc \
-  make \
-  ruby-devel \
-  rubygem-rdoc \
-  redhat-rpm-config
+# Install dependencies by root user.
+RUN script/run install-deps-root.sh
 
 USER tester
-RUN ruby -v
-RUN gem -v
-RUN gem install byebug -v 11.0.1 --user-install
-RUN gem install gem2rpm -v 1.0.1 --user-install
-RUN gem install nio4r -v 2.5.1 --user-install
-RUN gem list byebug gem2rpm nio4r
-RUN ls ~/.gem/ruby/gems/
+# Install dependencies by regular user.
+RUN script/run install-deps-user.sh
 
 # ====
 # Step 1: Run the following command to determine if your system is prepared
@@ -45,8 +51,8 @@ RUN yum -y distro-sync
 
 # ====
 # Step 2: Change the active stream to the later one
-RUN yum -y module reset ruby
-RUN yum -y module enable ruby:2.6
+RUN yum -y module reset "${MODULE_NAME}"
+RUN yum -y module enable "${MODULE_NAME}:${NEW_STREAM}"
 
 # ====
 # Step 3: Synchronize installed packages to perform the change between streams
@@ -54,7 +60,10 @@ RUN yum -y module enable ruby:2.6
 RUN yum -y distro-sync || true
 RUN yum -y --allowerasing distro-sync
 
+RUN yum module list "${MODULE_NAME}"
+
 # Prepare to test.
 USER tester
-RUN ruby -v
-RUN gem -v
+RUN script/run prepare-to-test.sh
+
+CMD script/run test.sh
