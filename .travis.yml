@@ -37,7 +37,7 @@ matrix:
         - MODULE_NAME=perl
         - CUR_STREAM=5.26
         - NEW_STREAM=5.30
-        # Need to set a profile as perl module does not have a default profile.
+        # Need to set a profile as the module does not have a default profile.
         - MODULE_PROFILE=default
       <<: *test_in_container
     - env:
@@ -50,7 +50,7 @@ matrix:
         - MODULE_NAME=postgresql
         - CUR_STREAM=9.6
         - NEW_STREAM=10
-        # Need to set a profile as postgresql module does not have a default profile.
+        # Need to set a profile as the module does not have a default profile.
         - MODULE_PROFILE=server
       <<: *test_in_container
   allow_failures:
