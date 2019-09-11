@@ -17,14 +17,17 @@ env:
 
 matrix:
   include:
-    - name: ruby
-      env:
+    - env:
         - MODULE_NAME=ruby
         - CUR_STREAM=2.5
         - NEW_STREAM=2.6
       <<: *test_in_container
-    - name: nodejs
-      env:
+    - env:
+        - MODULE_NAME=ruby
+        - CUR_STREAM=2.6
+        - NEW_STREAM=2.5
+      <<: *test_in_container
+    - env:
         - MODULE_NAME=nodejs
         - CUR_STREAM=10
         - NEW_STREAM=12
