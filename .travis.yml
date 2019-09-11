@@ -9,7 +9,7 @@ env:
     install: |
       docker build --rm -t test/fedora -f ci/Dockerfile-fedora .
     script: |
-      docker run --rm -t test/fedora "${TEST_CMD}"
+      docker run --rm -t test/fedora ${TEST_CMD}
 
 matrix:
   include:
