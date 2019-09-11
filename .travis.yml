@@ -32,6 +32,16 @@ matrix:
         - CUR_STREAM=10
         - NEW_STREAM=12
       <<: *test_in_container
+    - env:
+        - MODULE_NAME=perl
+        - CUR_STREAM=5.26
+        - NEW_STREAM=5.30
+      <<: *test_in_container
+    - env:
+        - MODULE_NAME=perl
+        - CUR_STREAM=5.30
+        - NEW_STREAM=5.26
+      <<: *test_in_container
   allow_failures:
   fast_finish: true
 branches:
