@@ -1,12 +1,15 @@
 dist: xenial
 language: bash
+env:
+  global:
+    - TEST_CMD='cat /etc/redhat-release'
 
 .com.github.junaruga.switch-module-stream-matrix-definitions:
   - &test_in_container
     install: |
       docker build --rm -t test/fedora -f ci/Dockerfile-fedora .
     script: |
-      docker run --rm -t test/fedora "${TEST_CMD:-uname}"
+      docker run --rm -t test/fedora "${TEST_CMD}"
 
 matrix:
   include:
@@ -14,8 +17,6 @@ matrix:
       <<: *test_in_container
   allow_failures:
   fast_finish: true
-script:
-  - bundle exec rake
 branches:
   only:
     - master
