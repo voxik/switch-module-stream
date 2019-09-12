@@ -6,8 +6,8 @@ This repository is to show examples and command level steps to switch a module s
 
 It's useful to see below points during the processes.
 
-* How some RPM packages depending on one of current stream and new stream work.
-* How language packages (gem in Ruby, pip in Python and etc) depending on a stream work.
+* How some RPM packages depending on one of current stream and new stream work. `yum -y install ruby-hivex ruby-libguestf` in [script/ruby/install-deps-root.sh](script/ruby/install-deps-root.sh) is to check it.
+* How language packages that have the C-extention (gem in Ruby, pip in Python and etc) depending on a stream work. `gem install ...` commands in [script/ruby/install-deps-user.sh](script/ruby/install-deps-user.sh) is to check it.
 
 ## Documents
 
