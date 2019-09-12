@@ -28,6 +28,7 @@ RUN chown -R tester:tester /work
 RUN yum module list "${MODULE_NAME}"
 RUN yum -y module reset "${MODULE_NAME}"
 RUN yum -y module enable "${MODULE_NAME}:${CUR_STREAM}"
+# Run yum moudle install considering an existance of the module profile.
 RUN script/run-module-install.sh
 
 # Install RPM packages or language packages (in case of ruby, gem packages)
