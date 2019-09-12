@@ -3,14 +3,17 @@
 ARG BASE_IMAGE=fedora:30
 FROM ${BASE_IMAGE}
 
+# YUM repository file URL
+ARG YUM_REPO_URL
+# Module name
 ARG MODULE_NAME=ruby
 # Current stream
 ARG CUR_STREAM=2.5
 # New stream
 ARG NEW_STREAM=2.6
+# Module profile name.
+# If the module does not have the default profile, you need to set.
 ARG MODULE_PROFILE
-# YUM repository file URL
-ARG YUM_REPO_URL
 
 ENV MODULE_NAME "${MODULE_NAME}"
 ENV CUR_STREAM "${CUR_STREAM}"
