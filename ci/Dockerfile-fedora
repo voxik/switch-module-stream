@@ -9,6 +9,8 @@ ARG CUR_STREAM=2.5
 # New stream
 ARG NEW_STREAM=2.6
 ARG MODULE_PROFILE
+# YUM repository file URL
+ARG YUM_REPO_URL
 
 ENV MODULE_NAME "${MODULE_NAME}"
 ENV CUR_STREAM "${CUR_STREAM}"
@@ -23,6 +25,9 @@ RUN useradd -m tester
 WORKDIR /work
 COPY . .
 RUN chown -R tester:tester /work
+
+# Install YUM repository file if it exists.
+RUN script/run-install-repo.sh
 
 # Install current module.
 RUN yum module list "${MODULE_NAME}"
