@@ -30,6 +30,13 @@ matrix:
         - CUR_STREAM=2.6
         - NEW_STREAM=2.5
       <<: *test_in_container
+    # Only 1 stream is available on RHEL 8.0.
+    - env:
+        - BASE_IMAGE=registry.access.redhat.com/ubi8:8.0
+        - MODULE_NAME=ruby
+        - CUR_STREAM=2.5
+        - NEW_STREAM=2.5
+      <<: *test_in_container
     - env:
         - MODULE_NAME=nodejs
         - CUR_STREAM=10
