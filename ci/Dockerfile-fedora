@@ -35,7 +35,6 @@ RUN script/run-install-repo.sh
 # Install current module.
 RUN yum module list "${MODULE_NAME}"
 RUN yum -y module reset "${MODULE_NAME}"
-RUN yum -y module enable "${MODULE_NAME}:${CUR_STREAM}"
 # Run yum moudle install considering an existance of the module profile.
 RUN script/run-module-install.sh
 
