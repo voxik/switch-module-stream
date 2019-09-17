@@ -44,7 +44,7 @@ matrix:
       <<: *test_in_container
     - env:
         - MODULE_NAME=perl
-        - CUR_STREAM=5.26
+        - CUR_STREAM=5.28
         - NEW_STREAM=5.30
         # Need to set a profile as the module does not have a default profile.
         - MODULE_PROFILE=default
@@ -52,7 +52,7 @@ matrix:
     - env:
         - MODULE_NAME=perl
         - CUR_STREAM=5.30
-        - NEW_STREAM=5.26
+        - NEW_STREAM=5.28
         - MODULE_PROFILE=default
       <<: *test_in_container
     - name: nginx
