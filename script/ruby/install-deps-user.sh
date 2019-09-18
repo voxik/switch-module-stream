@@ -9,4 +9,4 @@ gem install byebug -v 11.0.1 --user-install
 gem install gem2rpm -v 1.0.1 --user-install
 gem install nio4r -v 2.5.1 --user-install
 gem list byebug gem2rpm nio4r
-ls ~/.gem/ruby/gems/
+find ~/.gem/

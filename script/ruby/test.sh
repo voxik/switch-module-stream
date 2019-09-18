@@ -3,6 +3,7 @@
 ruby -v
 # Check if the gem command shows "gem pristine" warnings.
 gem -v
+find ~/.gem/
 
 pushd script/ruby
 # Run a script to reinstall gem packages to suppress the warnings.
